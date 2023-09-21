@@ -2,10 +2,9 @@ import { Form, Input, Label, SubmitButton } from './ContactForm.styled';
 import Notiflix from 'notiflix';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContacts } from 'redux/operations';
+import { addContacts } from 'redux/user/operations';
 
 const ContactFormPage = () => {
- 
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
 

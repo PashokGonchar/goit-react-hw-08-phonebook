@@ -1,16 +1,52 @@
-import { HeaderDiv, HeaderH1, HeaderH2 } from './AppNew.styled';
-import Filter from './ContactFilters/ContactFilters';
-import ContactFormPage from './ContactForm/ContactForm';
-import ContactListPage from './ContactsList/ContactsList';
+import { useDispatch } from 'react-redux';
+import { useUser } from './hooksUser';
+import { refreshUser } from 'redux/user/operations';
+import { Route, Routes } from 'react-router-dom';
+import Layout from './Layout';
+import PublicRoute from './PublicRoute';
+import PrivateRoute from './PrivateRoute';
 
-export const App = () => {
-  return (
-    <HeaderDiv>
-      <HeaderH1>Phonebook</HeaderH1>
-      <ContactFormPage />
-      <HeaderH2>Contacts</HeaderH2>
-      <Filter />
-      <ContactListPage />
-    </HeaderDiv>
+const { lazy, useEffect } = require('react');
+
+const Home = lazy(() => import('pages/Home'));
+const Login = lazy(() => import('pages/Login'));
+const Register = lazy(() => import('pages/Register'));
+const Contacts = lazy(() => import('pages/Contacts'));
+const NotFound = lazy(() => import('pages/NotFound'));
+
+export default function App() {
+  const dispatch = useDispatch();
+  const { isRefreshing } = useUser();
+
+  useEffect(() => {
+    dispatch(refreshUser());
+  }, [dispatch]);
+
+  return isRefreshing ? (
+    <b>Refreshing user ...</b>
+  ) : (
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<Home />} />
+        <Route
+          path="register"
+          element={
+            <PublicRoute redirectTo="/contacts" component={<Register />} />
+          }
+        />
+        <Route
+          path="login"
+          element={<PublicRoute redirectTo="/contacts" component={<Login />} />}
+        />
+        <Route
+          path="contacts"
+          element={
+            <PrivateRoute redirectTo="/login" component={<Contacts />} />
+          }
+        />
+        </Route>
+        
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
-};
+}
