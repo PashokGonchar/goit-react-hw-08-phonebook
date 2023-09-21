@@ -6,7 +6,7 @@ import Layout from './Layout';
 import PublicRoute from './PublicRoute';
 import PrivateRoute from './PrivateRoute';
 
-const { lazy, useEffect } = require('react');
+import { lazy, useEffect } from 'react';
 
 const Home = lazy(() => import('pages/Home'));
 const Login = lazy(() => import('pages/Login'));
@@ -44,8 +44,8 @@ export default function App() {
             <PrivateRoute redirectTo="/login" component={<Contacts />} />
           }
         />
-        </Route>
-        
+      </Route>
+
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

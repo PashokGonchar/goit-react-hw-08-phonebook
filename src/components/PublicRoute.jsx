@@ -1,19 +1,19 @@
-const { Suspense } = require("react");
-const { useSelector } = require("react-redux");
-const { Navigate, Outlet } = require("react-router-dom");
+import { Suspense } from 'react';
+import { useSelector } from 'react-redux';
+import { Navigate, Outlet } from 'react-router-dom';
 
 const PublicRoute = ({ redirectTo = '/', restricted = 'false' }) => {
-    const { token } = useSelector((state) => state.auth)
-    
-    const shouldRedirect = token && restricted;
+  const { token } = useSelector(state => state.auth);
 
-    return shouldRedirect ? (
-        < Navigate to={redirectTo} />
-    ) : (
-            <Suspense fallback = {<div>Loading...</div>}>
-                <Outlet/>
-            </Suspense>
-    )
-}
+  const shouldRedirect = token && restricted;
 
-export default PublicRoute
+  return shouldRedirect ? (
+    <Navigate to={redirectTo} />
+  ) : (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Outlet />
+    </Suspense>
+  );
+};
+
+export default PublicRoute;

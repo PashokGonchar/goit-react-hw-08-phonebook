@@ -3,7 +3,6 @@ import { Button, IconButton, InputAdornment, TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { Form } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import { register } from 'redux/user/operations';
 
@@ -46,6 +45,7 @@ export default function RegisterForm() {
   };
 
   const onFormSubmit = data => {
+    console.log('Form submitted with data:', data);
     dispatch(register(data));
   };
 
@@ -55,7 +55,7 @@ export default function RegisterForm() {
 
   return (
     <>
-      <Form onSubmit={handleSubmit(onFormSubmit, onFormError)}>
+      <form onSubmit={handleSubmit(onFormSubmit, onFormError)}>
         <Controller
           name="name"
           control={control}
@@ -120,7 +120,7 @@ export default function RegisterForm() {
         <Button type="submit" variant="outlined">
           Login
         </Button>
-      </Form>
+      </form>
 
       <ToastContainer
         position="top-right"
