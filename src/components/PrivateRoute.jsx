@@ -1,10 +1,10 @@
-import { useSelector } from "react-redux";
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate } from "react-router-dom";
+import { useUser } from "./hooksUser";
 
-const PrivateRoute = ({ redirectTo }) => {
-    const { token } = useSelector((state) => state.auth);
-    
-    return token ? <Outlet /> : <Navigate to={redirectTo} />
+export default function PrivateRoute({
+  redirectTo = '/',
+  component: Component,
+}) {
+  const { isLoggedIn } = useUser();
+  return isLoggedIn ? Component : <Navigate to={redirectTo} />;
 }
-
-export default PrivateRoute;

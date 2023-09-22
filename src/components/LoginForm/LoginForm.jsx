@@ -3,7 +3,6 @@ import { Button, IconButton, InputAdornment, TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { Form } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import { logIn } from 'redux/user/operations';
 
@@ -54,7 +53,7 @@ export default function LoginForm() {
 
   return (
     <>
-      <Form onSubmit={handleSubmit(onFormSubmit, onFormError)}>
+      <form onSubmit={handleSubmit(onFormSubmit, onFormError)}>
         <Controller
           name="email"
           control={control}
@@ -104,7 +103,7 @@ export default function LoginForm() {
         <Button type="submit" variant="outlined">
           Login
         </Button>
-      </Form>
+      </form>
 
       <ToastContainer
         position="top-right"
