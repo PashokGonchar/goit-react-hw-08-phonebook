@@ -45,7 +45,6 @@ export default function RegisterForm() {
   };
 
   const onFormSubmit = data => {
-    console.log('Form submitted with data:', data);
     dispatch(register(data));
   };
 

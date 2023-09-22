@@ -8,9 +8,9 @@ export default function UsersBar() {
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
   return (
-    <div>
+    <header>
       <Navigation />
       {isLoggedIn ? <UserMenu /> : <AuthNav />}
-    </div>
+    </header>
   );
 }
