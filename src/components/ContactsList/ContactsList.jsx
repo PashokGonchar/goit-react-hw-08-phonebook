@@ -1,43 +1,29 @@
 import { ListBtn, ListLi } from './ContactList.styled';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
-import { deleteContacts, fetchContacts } from 'redux/user/operations';
-import Loader from 'components/Loader/Loader';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { deleteContacts} from 'redux/user/operations';
+import { selectFilteredContacts } from 'redux/contacts/selectors';
 
 const ContactListPage = () => {
   const dispatch = useDispatch();
+  const contacts = useSelector(selectFilteredContacts);
 
-  const contacts = useSelector(state => state.contactsSlice.contacts.items);
-
-  const filter = useSelector(
-    state => state.contactsSlice.contacts.filter.value
-  );
-
-  const getFilteredContacts = () => {
-    const normalizedFilter = filter.toLowerCase();
-    return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(normalizedFilter)
-    );
+  const onDelete = ({ id }) => {
+    dispatch(deleteContacts(id));
   };
-  const filteredContacts = getFilteredContacts();
-
-  const isLoading = useSelector(state => state.contactsSlice.isLoading);
-  const error = useSelector(state => state.contactsSlice.error);
-
-  useEffect(() => {
-    dispatch(fetchContacts());
-  }, [dispatch]);
 
   return (
     <div>
       <ul>
-        {error && <li>{error}</li>}
-
-        {isLoading && <Loader />}
-        {filteredContacts.map(({ id, name, phone }) => (
+        {contacts.map(({ id, name, phone }) => (
           <ListLi key={id}>
             {name}:{phone}
-            <ListBtn type="button" onClick={() => dispatch(deleteContacts(id))}>
+            <ListBtn
+              variant="outlined"
+              startIcon={<DeleteIcon />}
+              type="button"
+              onClick={() => onDelete(id)}
+            >
               Delete contact
             </ListBtn>
           </ListLi>

@@ -1,71 +1,106 @@
-import { Form, Input, Label, SubmitButton } from './ContactForm.styled';
-import Notiflix from 'notiflix';
-import { useState } from 'react';
+import { TextField } from '@mui/material';
+import React  from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContacts } from 'redux/user/operations';
+import { ToastContainer, toast } from 'react-toastify';
+import { addContact } from 'redux/contacts/operations';
+import { selectContacts } from 'redux/contacts/selectors';
+import AddIcon from '@mui/icons-material/Add';
+
 
 const ContactFormPage = () => {
-  const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitSuccessful },
+  } = useForm({
+    defaultValues: {
+      name: '',
+      number: '',
+    },
+  });
 
-  const contacts = useSelector(state => state.contactsSlice.contacts.items);
   const dispatch = useDispatch();
+  const contacts = useSelector(selectContacts)
 
-  const handleInputName = e => {
-    setName(e.target.value);
-  };
-  const handleInputNumber = e => {
-    setPhone(e.target.value);
-  };
-
-  const handleSubmitForm = e => {
-    e.preventDefault();
-
-    if (contacts.some(contact => contact.name === name)) {
-      Notiflix.Notify.info(`${name} вже існує!`);
-      return;
-    }
-
-    if (contacts.some(contact => contact.phone === phone)) {
-      Notiflix.Notify.info(`${phone} вже є у цьому списку контактів!`);
-      return;
-    }
-
-    const newContact = {
+  const handleSubmitForm = data => {
+    const { name, number } = data;
+    const contact = {
       name,
-      phone,
+      number
     };
 
-    dispatch(addContacts(newContact));
+    if (contacts.some(contact => contact.name === name)) {
+      toast.warning(`${name} вже існує!`);
+      return;
+    }
 
-    setName('');
-    setPhone('');
+    if (contacts.some(contact => contact.number === number)) {
+      toast.warning(`${number} вже є у цьому списку контактів!`);
+      return;
+    }
+    dispatch(addContact(contact))
   };
 
+  const onFormError = error => {
+  toast.error(error)
+}
+
+  React.useEffect(() => {
+    if (isSubmitSuccessful) {
+      reset()
+    }
+  },[isSubmitSuccessful, reset])
+  
   return (
-    <Form onSubmit={handleSubmitForm}>
-      <Label htmlFor="name">Name</Label>
-      <Input
-        type="text"
-        name="name"
-        pattern="^[a-zA-Zа-яА-ЯІіЇїҐґ' \-\u0400-\u04FF]+$"
-        title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-        required
-        value={name}
-        onChange={handleInputName}
+    <>
+      <form onSubmit={handleSubmit(handleSubmitForm, onFormError)}>
+        <Controller
+          name="name"
+          control={control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label="Name"
+              variant="outlined"
+              size="small"
+              error={errors.name && true}
+              helperText={errors.name?.message}
+            />
+          )}
+        />
+
+        <Controller
+          name="number"
+          control={control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label="Phone"
+              variant="outlined"
+              size="small"
+              error={errors.number && true}
+              helperText={errors.number?.message}
+            />
+          )}
+        />
+        <button type="submit" variant="outlined" startIcon={<AddIcon />}>
+          Add Contacts
+        </button>
+      </form>
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
       />
-      <Label htmlFor="number">Number</Label>
-      <Input
-        type="tel"
-        name="phone"
-        pattern="^[+]?[0-9\\.\\-\\s]{1,15}$"
-        title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-        required
-        value={phone}
-        onChange={handleInputNumber}
-      />
-      <SubmitButton type="submit">Add Contacts</SubmitButton>
-    </Form>
+    </>
   );
 };
 

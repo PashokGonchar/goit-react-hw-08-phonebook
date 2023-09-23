@@ -2,17 +2,10 @@ import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 import {
   addContact,
   deleteContact,
-  editContact,
   fetchContacts,
 } from './operations';
 
-const initialState = {
-  items: [],
-  isLoading: false,
-  error: null,
-};
-
-const extraActions = [addContact, deleteContact, fetchContacts, editContact];
+const extraActions = [addContact, deleteContact, fetchContacts];
 
 const getActions = type => {
   return isAnyOf(...extraActions.map(action => action[type]));
@@ -28,13 +21,6 @@ const addContactReducer = (state, action) => {
 
 const deleteContactReducer = (state, action) => {
   state.items = state.items.filter(item => item.id !== action.payload.id);
-};
-
-const editContactReducer = (state, action) => {
-  let [contact] = state.items.filter(item => item.id === action.payload.id);
-  if (contact) {
-    Object.assign(contact, action.payload);
-  }
 };
 
 const pendingReducer = state => {
@@ -53,12 +39,15 @@ const fulfilledReducer = state => {
 
 export const contactSlice = createSlice({
   name: 'contacts',
-  initialState,
+  initialState: {
+    items: [],
+    isLoading: false,
+    error: null,
+  },
   extraReducers: builder => {
     builder
       .addCase(fetchContacts.fulfilled, fetchContactsReducer)
       .addCase(addContact.fulfilled, addContactReducer)
-      .addCase(editContact.fulfilled, editContactReducer)
       .addCase(deleteContact.fulfilled, deleteContactReducer)
       .addMatcher(getActions('pending'), pendingReducer)
       .addMatcher(getActions('rejected'), rejectedReducer)

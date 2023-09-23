@@ -35,8 +35,8 @@ export default function Layout() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Container>
-          <UsersBar/>
-          <Suspense fallback={<></>}>
+          <UsersBar />
+          <Suspense fallback={<div>Loading main content...</div>}>
             <Outlet />
           </Suspense>
         </Container>

@@ -1,4 +1,3 @@
-import { useTheme } from '@mui/material';
 import Filter from 'components/ContactFilters/ContactFilters';
 import ContactFormPage from 'components/ContactForm/ContactForm';
 import ContactListPage from 'components/ContactsList/ContactsList';
@@ -9,7 +8,6 @@ import { selectError, selectIsLoading } from 'redux/contacts/selectors';
 import { selectIsLoggedIn } from 'redux/user/selectors';
 
 export default function Contacts() {
-  const theme = useTheme();
 
   const dispatch = useDispatch();
   const isLoading = useSelector(selectIsLoading);
@@ -23,17 +21,11 @@ export default function Contacts() {
 
   return (
     <div>
-      <div
-        as="h1"
-        pt="20px"
-        pb="10px"
-        margin="0 auto"
-        color={theme.palette.text.primary}
-      >
+      <div>
         Phonebook
       </div>
       <ContactFormPage />
-      <div as="h2" mb="0" color={theme.palette.text.primary}>
+      <div>
         Contacts
       </div>
       <Filter />

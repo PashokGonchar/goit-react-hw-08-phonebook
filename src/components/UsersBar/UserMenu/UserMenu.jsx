@@ -3,6 +3,7 @@ import EmailIcon from '@mui/icons-material/Email';
 import { Button } from '@mui/material';
 import { useUser } from 'components/hooksUser';
 import { useDispatch } from 'react-redux';
+import { logOut } from 'redux/user/operations';
 
 export default function UserMenu() {
   const {
@@ -12,7 +13,7 @@ export default function UserMenu() {
   const dispatch = useDispatch();
 
   const logout = () => {
-    dispatch(logout());
+    dispatch(logOut());
   };
 
   return (

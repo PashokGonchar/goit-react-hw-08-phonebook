@@ -1,7 +1,7 @@
-import { Navigate } from "react-router-dom";
-import { useUser } from "./hooksUser";
+import { Navigate } from 'react-router-dom';
+import { useUser } from './hooksUser';
 
-export default function RestrictedRoute({
+export default function PublicRoute({
   redirectTo = '/',
   component: Component,
 }) {

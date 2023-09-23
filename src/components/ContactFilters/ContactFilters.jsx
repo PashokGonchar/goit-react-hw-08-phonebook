@@ -1,28 +1,26 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { FilterDiv, FilterLabel, FilterInput } from './ContactFilters.styled';
-import { setFilter } from 'redux/contacts/contactsSlice';
+import { useDispatch } from 'react-redux';
+import { setFilter } from 'redux/filter/filterSlice';
+import debounce from 'lodash.debounce';
+import { TextField } from '@mui/material';
 
 const Filter = () => {
   const dispatch = useDispatch();
 
-  const filter = useSelector(
-    state => state.contactsSlice.contacts.filter.value
-  );
-
-  const onInputChange = e => {
-    dispatch(setFilter(e.currentTarget.value));
+  const onFilterChange = e => {
+    const value = e.target.value;
+    dispatch(setFilter(value));
   };
+
+  const onFilterChangeDebounced = debounce(onFilterChange, 500);
+
   return (
-    <FilterDiv>
-      <FilterLabel htmlFor="filter">Find contacts by name</FilterLabel>
-      <FilterInput
-        type="text"
-        name="filter"
-        value={filter}
-        onChange={onInputChange}
-        placeholder="Enter name to search please..."
-      />
-    </FilterDiv>
+    <TextField
+      id="search"
+      name="search"
+      label="Find contacts by name"
+      variant="standard"
+      onChange={onFilterChangeDebounced}
+    />
   );
 };
 
