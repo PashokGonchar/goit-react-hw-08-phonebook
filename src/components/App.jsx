@@ -29,17 +29,17 @@ export default function App() {
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
         <Route
-          path="register"
+          path="/register"
           element={
             <PublicRoute redirectTo="/contacts" component={<Register />} />
           }
         />
         <Route
-          path="login"
+          path="/login"
           element={<PublicRoute redirectTo="/contacts" component={<Login />} />}
         />
         <Route
-          path="contacts"
+          path="/contacts"
           element={
             <PrivateRoute redirectTo="/login" component={<Contacts />} />
           }
