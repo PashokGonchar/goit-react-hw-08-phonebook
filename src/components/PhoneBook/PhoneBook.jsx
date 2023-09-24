@@ -7,8 +7,8 @@ import { fetchContacts } from 'redux/contacts/operations';
 import { selectError, selectIsLoading } from 'redux/contacts/selectors';
 import { selectIsLoggedIn } from 'redux/user/selectors';
 
-export default function Contacts() {
-
+export default function PhoneBook() {
+  
   const dispatch = useDispatch();
   const isLoading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
@@ -21,13 +21,9 @@ export default function Contacts() {
 
   return (
     <div>
-      <div>
-        Phonebook
-      </div>
+      <div>Phonebook</div>
       <ContactFormPage />
-      <div>
-        Contacts
-      </div>
+      <div>Contacts</div>
       <Filter />
       {isLoading && !error && <b>Request in progress ...</b>}
       <ContactListPage />
