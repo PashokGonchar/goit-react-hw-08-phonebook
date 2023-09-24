@@ -8,7 +8,6 @@ import { selectError, selectIsLoading } from 'redux/contacts/selectors';
 import { selectIsLoggedIn } from 'redux/user/selectors';
 
 export default function PhoneBook() {
-  
   const dispatch = useDispatch();
   const isLoading = useSelector(selectIsLoading);
   const error = useSelector(selectError);

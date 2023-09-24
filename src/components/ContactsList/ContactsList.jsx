@@ -1,8 +1,7 @@
 import { ListBtn, ListLi } from './ContactList.styled';
 import { useDispatch, useSelector } from 'react-redux';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { selectFilteredContacts } from 'redux/contacts/selectors';
 import { deleteContact } from 'redux/contacts/operations';
+import { selectFilteredContacts } from 'redux/contacts/selectors';
 
 const ContactListPage = () => {
   const dispatch = useDispatch();
@@ -15,14 +14,13 @@ const ContactListPage = () => {
   return (
     <div>
       <ul>
-        {contacts.map(({ id, name, phone }) => (
+        {contacts.map(({ id, name, number }) => (
           <ListLi key={id}>
-            {name}:{phone}
+            {name}:{number}
             <ListBtn
               variant="outlined"
-              startIcon={<DeleteIcon />}
               type="button"
-              onClick={() => onDelete(id)}
+              onClick={() => onDelete({id})}
             >
               Delete contact
             </ListBtn>

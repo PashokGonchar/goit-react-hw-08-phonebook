@@ -1,11 +1,11 @@
 import { TextField } from '@mui/material';
+import Notiflix from 'notiflix';
 import React  from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { ToastContainer, toast } from 'react-toastify';
 import { addContact } from 'redux/contacts/operations';
 import { selectContacts } from 'redux/contacts/selectors';
-import AddIcon from '@mui/icons-material/Add';
+
 
 
 const ContactFormPage = () => {
@@ -32,19 +32,19 @@ const ContactFormPage = () => {
     };
 
     if (contacts.some(contact => contact.name === name)) {
-      toast.warning(`${name} вже існує!`);
+     Notiflix.Notify.info(`${name} вже існує!`);
       return;
     }
 
     if (contacts.some(contact => contact.number === number)) {
-      toast.warning(`${number} вже є у цьому списку контактів!`);
+      Notiflix.Notify.info(`${number} вже є у цьому списку контактів!`);
       return;
     }
     dispatch(addContact(contact))
   };
 
   const onFormError = error => {
-  toast.error(error)
+  Notiflix.Notify.warning(error);
 }
 
   React.useEffect(() => {
@@ -85,21 +85,12 @@ const ContactFormPage = () => {
             />
           )}
         />
-        <button type="submit" variant="outlined" startIcon={<AddIcon />}>
+        <button type="submit" variant="outlined">
           Add Contacts
         </button>
       </form>
-      <ToastContainer
-        position="top-right"
-        autoClose={2000}
-        hideProgressBar={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      />
+
+      
     </>
   );
 };
