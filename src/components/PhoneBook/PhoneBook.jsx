@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchContacts } from 'redux/contacts/operations';
 import { selectError, selectIsLoading } from 'redux/contacts/selectors';
 import { selectIsLoggedIn } from 'redux/user/selectors';
+import { DivPhoneBook, DivPhoneBookMain } from './PhoneBook.styled';
 
 export default function PhoneBook() {
   const dispatch = useDispatch();
@@ -19,13 +20,18 @@ export default function PhoneBook() {
   }, [dispatch, isLoggedIn]);
 
   return (
-    <div>
-      <div>Phonebook</div>
+    <DivPhoneBookMain>
+      <DivPhoneBook>Phonebook</DivPhoneBook>
+
       <ContactFormPage />
-      <div>Contacts</div>
+
+      <DivPhoneBook>Contacts</DivPhoneBook>
+
       <Filter />
+
       {isLoading && !error && <b>Request in progress ...</b>}
+
       <ContactListPage />
-    </div>
+    </DivPhoneBookMain>
   );
 }

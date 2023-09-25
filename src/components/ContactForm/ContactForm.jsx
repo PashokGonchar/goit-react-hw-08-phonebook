@@ -5,6 +5,8 @@ import { Controller, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from 'redux/contacts/operations';
 import { selectContacts } from 'redux/contacts/selectors';
+import { Form} from './ContactForm.styled';
+import NavButton from 'components/UsersBar/NavButton/NavButton';
 
 
 
@@ -55,7 +57,7 @@ const ContactFormPage = () => {
   
   return (
     <>
-      <form onSubmit={handleSubmit(handleSubmitForm, onFormError)}>
+      <Form onSubmit={handleSubmit(handleSubmitForm, onFormError)}>
         <Controller
           name="name"
           control={control}
@@ -65,7 +67,7 @@ const ContactFormPage = () => {
               label="Name"
               variant="outlined"
               size="small"
-               error={errors.name && true}
+              error={errors.name && true}
               helperText={errors.name?.message}
             />
           )}
@@ -80,16 +82,16 @@ const ContactFormPage = () => {
               label="Phone"
               variant="outlined"
               size="small"
-              type='number'
+              type="number"
               error={errors.number && true}
               helperText={errors.number?.message}
             />
           )}
         />
-        <button type="submit" variant="outlined">
+        <NavButton type="submit" variant="outlined">
           Add Contacts
-        </button>
-      </form>
+        </NavButton>
+      </Form>
     </>
   );
 };

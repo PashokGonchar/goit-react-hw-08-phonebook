@@ -1,10 +1,8 @@
 import styled from "@emotion/styled";
+import { TableCell } from "@mui/material";
 
-export const ListLi = styled.li`
-  display: flex;
-  padding: 5px;
-  margin-bottom: 5px;
-  list-style: circle;
+export const StyledTableCell = styled(TableCell)`
+color: #0000ff;
 `;
 
 export const ListBtn = styled.button`

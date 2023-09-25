@@ -1,11 +1,12 @@
 import { useTheme } from '@mui/material';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
+import { DivHome } from './Home.styled';
 
 export default function Home() {
   const theme = useTheme();
 
   return (
-    <div>
+    <DivHome>
       <MenuBookIcon />
       <div
         as="h1"
@@ -16,6 +17,6 @@ export default function Home() {
       >
         <h1>Phonebook home page</h1>
       </div>
-    </div>
+    </DivHome>
   );
 }

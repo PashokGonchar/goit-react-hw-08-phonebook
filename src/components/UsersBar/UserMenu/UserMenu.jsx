@@ -4,6 +4,7 @@ import { Button } from '@mui/material';
 import { useUser } from 'components/hooksUser';
 import { useDispatch } from 'react-redux';
 import { logOut } from 'redux/user/operations';
+import { DivUserMenu, DivUserMenuContact, DivUserMenuContactInfo } from './UserMenu.styled'
 
 export default function UserMenu() {
   const {
@@ -17,20 +18,20 @@ export default function UserMenu() {
   };
 
   return (
-    <div >
-      <div>
-        <div>
+    <DivUserMenu>
+      <DivUserMenuContact>
+        <DivUserMenuContactInfo>
           <AccountCircleIcon color="primary" />
           {name}
-        </div>
-        <div>
+        </DivUserMenuContactInfo>
+        <DivUserMenuContactInfo>
           <EmailIcon color="primary" />
           {email}
-        </div>
-      </div>
+        </DivUserMenuContactInfo>
+      </DivUserMenuContact>
       <Button variant="contained" onClick={logout}>
         Logout
       </Button>
-    </div>
+    </DivUserMenu>
   );
 }

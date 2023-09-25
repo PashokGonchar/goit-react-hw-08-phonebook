@@ -5,6 +5,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import { logIn } from 'redux/user/operations';
+import { DivLoginForm, StyledLoginForm } from './LoginForm.styled';
 
 export default function LoginForm() {
   const {
@@ -52,8 +53,9 @@ export default function LoginForm() {
   };
 
   return (
-    <>
-      <form onSubmit={handleSubmit(onFormSubmit, onFormError)}>
+    <DivLoginForm>
+      <h2>Please log in</h2>
+      <StyledLoginForm onSubmit={handleSubmit(onFormSubmit, onFormError)}>
         <Controller
           name="email"
           control={control}
@@ -103,7 +105,7 @@ export default function LoginForm() {
         <Button type="submit" variant="outlined">
           Login
         </Button>
-      </form>
+      </StyledLoginForm>
 
       <ToastContainer
         position="top-right"
@@ -116,6 +118,6 @@ export default function LoginForm() {
         pauseOnHover
         theme="colored"
       />
-    </>
+    </DivLoginForm>
   );
 }

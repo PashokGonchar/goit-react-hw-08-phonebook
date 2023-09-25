@@ -2,6 +2,7 @@ import { useDispatch } from 'react-redux';
 import { setFilter } from 'redux/filter/filterSlice';
 import debounce from 'lodash.debounce';
 import { TextField } from '@mui/material';
+import { FilterDiv } from './ContactFilters.styled';
 
 const Filter = () => {
   const dispatch = useDispatch();
@@ -14,13 +15,15 @@ const Filter = () => {
   const onFilterChangeDebounced = debounce(onFilterChange, 500);
 
   return (
-    <TextField
-      id="search"
-      name="search"
-      label="Find contacts by name"
-      variant="standard"
-      onChange={onFilterChangeDebounced}
-    />
+    <FilterDiv>
+      <TextField
+        id="search"
+        name="search"
+        label="Find contacts by name"
+        variant="standard"
+        onChange={onFilterChangeDebounced}
+      />
+    </FilterDiv>
   );
 };
 

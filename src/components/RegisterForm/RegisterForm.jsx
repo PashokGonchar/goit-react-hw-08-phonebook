@@ -5,6 +5,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import { register } from 'redux/user/operations';
+import { DivRegisterForm, StyledRegisterForm } from './RegisterForm.styled';
 
 export default function RegisterForm() {
   const {
@@ -53,8 +54,9 @@ export default function RegisterForm() {
   };
 
   return (
-    <>
-      <form onSubmit={handleSubmit(onFormSubmit, onFormError)}>
+    <DivRegisterForm>
+      <h2>Please register</h2>
+      <StyledRegisterForm onSubmit={handleSubmit(onFormSubmit, onFormError)}>
         <Controller
           name="name"
           control={control}
@@ -119,7 +121,7 @@ export default function RegisterForm() {
         <Button type="submit" variant="outlined">
           Login
         </Button>
-      </form>
+      </StyledRegisterForm>
 
       <ToastContainer
         position="top-right"
@@ -132,6 +134,6 @@ export default function RegisterForm() {
         pauseOnHover
         theme="colored"
       />
-    </>
+    </DivRegisterForm>
   );
 }
